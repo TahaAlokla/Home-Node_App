@@ -18,6 +18,7 @@ const homeRouter = require('./routers/home.router')
 const workerRouter=  require('./routers/worker.router')
 const serviceRouter = require('./routers/service.router')
 const adminRouter = require('./routers/admin.router')
+const QuestionsAndAnswerRouter = require('./routers/QuestionsAndAnswer.router')
 // connection with database 
 const option_mongoose={
     useNewUrlParser: true,
@@ -62,6 +63,7 @@ app.use('/api/user', userRouter)
 app.use('/api/worker',workerRouter)
 app.use('/api/service',serviceRouter)
 app.use('/api/admin',adminRouter)
+app.use('/api/questions',QuestionsAndAnswerRouter)
 
 
 

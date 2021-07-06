@@ -52,13 +52,13 @@ const loginUserValidation = [
 
 // worker register validation 
 const registerWorkerValidation = [
-    // body('username').
-    //     notEmpty()
-    //     .withMessage("user name is required ").
-    //     isString()
-    //     .withMessage('username should be string ')
-    //     .isLength({ min: 2, max: 40 })
-    //     .withMessage("username short length or longer length"),
+    body('username').
+        notEmpty()
+        .withMessage("user name is required ").
+        isString()
+        .withMessage('username should be string ')
+        .isLength({ min: 2, max: 40 })
+        .withMessage("username short length or longer length"),
     body('phoneNumber').
         notEmpty()
         .withMessage('phone number is required ')
@@ -157,16 +157,16 @@ const loginAdminValidation = [
         .withMessage("password should be string")
         .isLength({ min: 6, max: 40 })
         .withMessage("password should be between 6 to 40 char "),
-        
+
 
 ];
 
 
-const addAdminValidation=[
+const addAdminValidation = [
     check('adminName')
-    .notEmpty().withMessage("username is required")
-    .isString().withMessage("username should be string ")
-    .isLength({min:2,max:20}).withMessage("username should be length 2 to 20 char "),
+        .notEmpty().withMessage("username is required")
+        .isString().withMessage("username should be string ")
+        .isLength({ min: 2, max: 20 }).withMessage("username should be length 2 to 20 char "),
     check('password')
         .notEmpty()
         .withMessage("password is required ")
@@ -174,7 +174,7 @@ const addAdminValidation=[
         .withMessage("password should be string")
         .isLength({ min: 6, max: 40 })
         .withMessage("password should be between 6 to 40 char "),
-        check('phoneNumber').
+    check('phoneNumber').
         notEmpty()
         .withMessage('phone number is required ')
         .isLength({ max: 15, min: 10 })
@@ -191,25 +191,37 @@ const serviceValidation = [
         .isLength({ min: 3, max: 100 }).withMessage("serviceName should be length 3 to 100 char")
         .isAlpha('ar', { ignore: ' ' }).
         withMessage("service should be  arabic only "),
-        check('serviceDescription')
+    check('serviceDescription')
         .notEmpty().withMessage("serviceDescription is required ")
-        .isLength({min:10,max:1000}).withMessage("serviceDescription should be between 10 to 1000 char")
+        .isLength({ min: 10, max: 1000 }).withMessage("serviceDescription should be between 10 to 1000 char")
         .isAlpha('ar', { ignore: ' ' }).
         withMessage("service should be  arabic only "),
-        check('serviceImage').custom((valueInput, { req }) => {
-            if (req.file) {
-                return true
-            } else {
-                throw 'Error  image is required '
-            }
-        })
+    check('serviceImage').custom((valueInput, { req }) => {
+        if (req.file) {
+            return true
+        } else {
+            throw 'Error  image is required '
+        }
+    })
 
 ];
 
+
+const QuestionAndAnswerValidation  = [
+    body('Question')
+        .notEmpty().withMessage("Question is required")
+        .isLength({ min: 6, max: 1500 }).withMessage("Question length between 6 to 1500 char").isAlpha('ar', { ignore: ' ' }).
+        withMessage("Question should be  arabic only "),
+    body('Answer')
+        .notEmpty().withMessage("Question is required")
+        .isLength({ min: 6, max: 1500 }).withMessage("Question length between 6 to 1500 char").isAlpha('ar', { ignore: ' ' }).
+        withMessage("Question should be  arabic only "),
+]
+module.exports.QuestionAndAnswerValidation = QuestionAndAnswerValidation
 module.exports.serviceValidation = serviceValidation
 module.exports.loginAdminValidation = loginAdminValidation
 module.exports.registerUserValidation = registerUserValidation
 module.exports.loginUserValidation = loginUserValidation
 module.exports.loginWorkerValidation = loginWorkerValidation
 module.exports.registerWorkerValidation = registerWorkerValidation
-module.exports.addAdminValidation=addAdminValidation
+module.exports.addAdminValidation = addAdminValidation

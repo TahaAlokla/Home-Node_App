@@ -79,7 +79,7 @@ exports.updateService = (req, res, next) => {
     console.log(idService);
     const serves = {
         serviceName: req.body.serviceName,
-        serviceImage: req.body.serviceImage,
+        serviceImage: req.file.filename,
         serviceDescription: req.body.serviceDescription
     }
     serviceModel.findOneAndUpdate({ _id: idService }, { $set: serves }, { new: true }).then(result => {
@@ -99,7 +99,6 @@ exports.updateService = (req, res, next) => {
         res.status(404).json({
             massageFrom: " err catch update service !",
             massage: err
-
         })
     })
 
