@@ -43,14 +43,14 @@ const userSchema = mongoose.Schema({
         type:String,
     },
     workerAge:{
-        type:Date
+        type:String
     },
     workerAddress:{
         type:String
     },
     workerGender:{
         type:String,
-        enum: ['male', 'female'],
+        enum: ['ذكر', 'أنثى'],
     },
     // filed special worker array of request orders [include id order]
     orderRequest:{

@@ -1,4 +1,4 @@
-const { object } = require('joi');
+const { object, date } = require('joi');
 const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema,
@@ -6,24 +6,28 @@ ObjectId= Schema.ObjectId;
 const orderSchema=  mongoose.Schema({
     IdClient:{
         type:ObjectId,
+        ref:"user",
         required :true,
     },
     IdWorker :{
         type:ObjectId,
+        ref:"user",
         required :true,
     },
-    IdService:{
-        type:ObjectId,
+    serviceName:{
+        type:"String",
+        // ref:"Service",
         required :true,
     },
     timeOrder:{
         type:Date,
-        required :true,
+        default:Date.now
+        // required :true,
     },
     OrderStatus:{
         type:String,
-        enum: ['hanging', 'Acceptance','reject','Cancellation','ending '],
-        default:'hanging'
+        enum: ['معلق', 'مقبول','مرفوض','ألغاء','منهي'],
+        default:'معلق'
     }
 },{ timestamps: true })
 module.exports = mongoose.model("Order",orderSchema)

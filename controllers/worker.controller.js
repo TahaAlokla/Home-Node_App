@@ -33,7 +33,8 @@ exports.login = (req, res, next) => {
                     })
                     res.header('Authorization', token).json({
                         massage: 'success login ',
-                        token: token
+                        token: token,
+                        user:user
                     })
 
                 } else {

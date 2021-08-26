@@ -18,6 +18,7 @@ const homeRouter = require('./routers/home.router')
 const workerRouter=  require('./routers/worker.router')
 const serviceRouter = require('./routers/service.router')
 const adminRouter = require('./routers/admin.router')
+const citesAvailableRouter = require('./routers/citesAvailable.router')
 const QuestionsAndAnswerRouter = require('./routers/QuestionsAndAnswer.router')
 // connection with database 
 const option_mongoose={
@@ -50,7 +51,7 @@ app.options('*',cors())
 app.use(logger('dev'));
 // ==================================================================================//
 // static folder  
-app.use(express.static(path.join(__dirname, '/images')))
+app.use('/images',express.static(path.join(__dirname, '/images')))
 
 // for supported Json Format 
 app.use(express.json())
@@ -58,12 +59,14 @@ app.use(express.urlencoded({ extended: true }))
 
 
 //  using  routers middleware
-app.use('/', homeRouter)
+app.use('/api/', homeRouter)
 app.use('/api/user', userRouter)
 app.use('/api/worker',workerRouter)
 app.use('/api/service',serviceRouter)
 app.use('/api/admin',adminRouter)
 app.use('/api/questions',QuestionsAndAnswerRouter)
+app.use('/api/cites', citesAvailableRouter);
+
 
 
 

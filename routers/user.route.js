@@ -12,5 +12,13 @@ router.post('/login', loginUserValidation, userController.login)
 router.delete('/delete/:id',authUser.isAuthUser,userController.deleteUser)
 // update User /api/user/update/:id
 router.patch('/update/:id',authUser.isAuthUser ,userController.updateUser)
+//  search workerProviderService 
+router.post('/searchWorker', authUser.isAuthUser,userController.searchWorker)
+// * user request order 
+router.post('/addOrder', authUser.isAuthUser,userController.addOrderWorker)
 
+// get order status pending 
+// getOrderStatusPending
+
+ router.post('/getOrderStatusPending', authUser.isAuthUser, userController.getOrderStatusPending)
 module.exports = router;

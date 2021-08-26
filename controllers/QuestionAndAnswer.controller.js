@@ -8,7 +8,7 @@ exports.allQuestionAndAnswer=(req, res ,next)=>{
         if(questionsArray.length>0){
             res.status(200).json({
                 questionsArray:questionsArray,
-                massage:" questionsArray"
+                massage:"قائمة الاسئلة "
             })
         }else{
             res.status(200).json({

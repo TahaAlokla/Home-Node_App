@@ -85,8 +85,9 @@ const registerWorkerValidation = [
         .withMessage("description service should be string ")
         .isLength({ min: 20, max: 2000 }).
         withMessage("description service between 50 to 2000 char")
-        .isAlpha('ar', { ignore: ' ' }).
-        withMessage("description service should be  arabic only "),
+        // .isAlpha('ar', { ignore: ' ' }).
+        // withMessage("description service should be  arabic only ")
+        ,
     body('service')
         .notEmpty().
         withMessage("service option is required ")
@@ -94,8 +95,9 @@ const registerWorkerValidation = [
         .withMessage(" service is string should be ")
         .isLength({ min: 2, max: 300 })
         .withMessage(" service should be length between 2 to 300 char ")
-        .isAlpha('ar', { ignore: ' ' }).
-        withMessage("service should be  arabic only "),
+        // .isAlpha('ar', { ignore: ' ' }).
+        // withMessage("service should be  arabic only ")
+        ,
     body('workerAge')
         .notEmpty()
         .withMessage(" is birthday  required "),
@@ -105,8 +107,8 @@ const registerWorkerValidation = [
     body('workerAddress')
         .notEmpty()
         .withMessage("address worker is required ")
-        .isAlpha('ar-AE', { ignore: ' ' }).
-        withMessage("address should be  arabic only ")
+        // .isAlpha('ar-AE', { ignore: ' 1' }).
+        // withMessage("address should be  arabic only ")
         .isLength({ min: 5, max: 300 })
         .withMessage(" address should be length between 2 to 300 char "),
     body('workerGender')
@@ -189,13 +191,14 @@ const serviceValidation = [
     check('serviceName')
         .notEmpty().withMessage("serviceName is Required ")
         .isLength({ min: 3, max: 100 }).withMessage("serviceName should be length 3 to 100 char")
-        .isAlpha('ar', { ignore: ' ' }).
-        withMessage("service should be  arabic only "),
-    check('serviceDescription')
+        // .isAlpha('ar', { ignore: ' ' }).
+        // withMessage("service should be  arabic only "),
+   , check('serviceDescription')
         .notEmpty().withMessage("serviceDescription is required ")
         .isLength({ min: 10, max: 1000 }).withMessage("serviceDescription should be between 10 to 1000 char")
-        .isAlpha('ar', { ignore: ' ' }).
-        withMessage("service should be  arabic only "),
+        // .isAlpha('ar', { ignore: ' ' }).
+        // withMessage("service should be  arabic only ")
+        ,
     check('serviceImage').custom((valueInput, { req }) => {
         if (req.file) {
             return true
@@ -206,17 +209,36 @@ const serviceValidation = [
 
 ];
 
+const citesAvailableValidation=[
+    check('cityName')
+    .notEmpty().withMessage("cityName is Required ")
+    .isLength({ min: 3, max: 100 }).withMessage("serviceName should be length 3 to 100 char")
+    .isAlpha('ar', { ignore: ' ' }).
+    withMessage("cityName should be  arabic only "),
+]
+
+
 
 const QuestionAndAnswerValidation  = [
     body('Question')
-        .notEmpty().withMessage("Question is required")
-        .isLength({ min: 6, max: 1500 }).withMessage("Question length between 6 to 1500 char").isAlpha('ar', { ignore: ' ' }).
-        withMessage("Question should be  arabic only "),
+        .notEmpty()
+        .withMessage("Question is required")
+        .isLength({ min: 6, max: 1500 })
+        .withMessage("Question length between 6 to 1500 char")
+        // .isAlpha('ar', { ignore: ' ' }).
+        // withMessage("Question should be  arabic only ")
+        ,
     body('Answer')
-        .notEmpty().withMessage("Question is required")
-        .isLength({ min: 6, max: 1500 }).withMessage("Question length between 6 to 1500 char").isAlpha('ar', { ignore: ' ' }).
-        withMessage("Question should be  arabic only "),
+        .notEmpty()
+        .withMessage("Question is required")
+        .isLength({ min: 6, max: 1500 })
+        .withMessage("Question length between 6 to 1500 char")
+        // .isAlpha('ar', { ignore: ' ' }).
+        // withMessage("Question should be  arabic only ")
+        ,
 ]
+
+module.exports.citesAvailableValidation = citesAvailableValidation
 module.exports.QuestionAndAnswerValidation = QuestionAndAnswerValidation
 module.exports.serviceValidation = serviceValidation
 module.exports.loginAdminValidation = loginAdminValidation

@@ -2,18 +2,22 @@ const router = require('express').Router();
 const adminController = require('../controllers/admin.controller')
 const serviceController = require('../controllers/service.controller')
 const QuestionAndAnswerController = require('../controllers/QuestionAndAnswer.controller')
+const citesAvailableController = require('../controllers/citesAvailable.controller')
 const authAdmin = require('../guards/auth.admin')
 const { loginAdminValidation } = require('../services/Validation.user.service')
 const { addAdminValidation } = require('../services/Validation.user.service')
 const {QuestionAndAnswerValidation} = require('../services/Validation.user.service')
+const {citesAvailableValidation} = require('../services/Validation.user.service')
+
+
 const multer = require('multer')
 let upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callFun) => {
-            callFun(null, 'images/serviceImages')
+            callFun(null, 'images')
         },
         filename: (req, file, callFun) => {
-            callFun(null, Date.now().toString() + '-' + file.originalname)
+            callFun(null,'image'+ new Date().toISOString().toString().replace(/:/g,'I')+'_' +file.originalname)
         }
     })
 })
@@ -46,6 +50,7 @@ router.delete('/deleteQ&A/:id',authAdmin.isAuthAdmin,QuestionAndAnswerController
 
 //     adminController.addAdmin)
 
-
+// * add citesAvailable
+router.post('/addCitesAvailable',authAdmin.isAuthAdmin,citesAvailableController.addCityAvailable)
 
 module.exports = router;

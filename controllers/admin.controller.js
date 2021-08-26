@@ -39,6 +39,9 @@ exports.login = (req, res, next) => {
                     })
                     res.header('Authorization', token).json({
                         massage: 'success login ',
+                        typeUser:'admin',
+                        // * send admin 
+                        user:user,
                         token: token
                     })
 

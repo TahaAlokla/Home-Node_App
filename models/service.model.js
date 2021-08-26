@@ -10,10 +10,12 @@ const servesSchema= mongoose.Schema({
     serviceImage:{
         type:String,
         required: true ,
+        unique: true
     },
     serviceDescription:{
         type:String,
         required: true ,
+        unique: true
     },
     tags:{
         type:[String],
