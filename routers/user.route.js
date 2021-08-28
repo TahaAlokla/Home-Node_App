@@ -21,4 +21,6 @@ router.post('/addOrder', authUser.isAuthUser,userController.addOrderWorker)
 // getOrderStatusPending
 
  router.post('/getOrderStatusPending', authUser.isAuthUser, userController.getOrderStatusPending)
+
+ router.post('/GetAllOrderStatus',authUser.isAuthUser, userController.GetAllOrderStatus)
 module.exports = router;

@@ -30,4 +30,5 @@ const orderSchema=  mongoose.Schema({
         default:'معلق'
     }
 },{ timestamps: true })
+orderSchema.index({IdClient: 1, IdWorker: 1}, {unique: true});
 module.exports = mongoose.model("Order",orderSchema)

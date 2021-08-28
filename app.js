@@ -10,6 +10,9 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 var logger = require('morgan');
 const cors =require('cors')
+const socketIO = require('socket.io')
+const httpServer = require('http').createServer(app)
+const IO = socketIO(httpServer)
 dotenv.config()
 // ==============================================================================//
 //  using  routers middleware
@@ -94,6 +97,9 @@ app.use('/api/cites', citesAvailableRouter);
 
   
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`App listening on port ${port}!`);
-});
+// app.listen(port, () => {
+//     console.log(`App listening on port ${port}!`);
+// });
+httpServer.listen(port, () => {
+       console.log(`App listening on port ${port}!`);
+   });

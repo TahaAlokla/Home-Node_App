@@ -315,3 +315,40 @@ exports.getOrderStatusPending = (req, res, next) => {
       });
     });
 };
+
+
+exports.GetAllOrderStatus=(req, res,next)=>{
+  // .populate({path:"IdWorker", select:"username"})
+  Order
+    .find({ IdClient: req.body.IdForClient })
+    .select("IdWorker serviceName timeOrder OrderStatus").populate({path:"IdWorker", select:"username"})
+    .then((result) => {
+
+      let pendingStatus= result.filter(PendStatus =>PendStatus.OrderStatus==="معلق")
+
+      let AcceptStatus= result.filter(PendStatus =>PendStatus.OrderStatus==="مقبول")
+
+      let  RejectionStatus= result.filter(PendStatus =>PendStatus.OrderStatus==="مرفوض")
+
+      // منهي
+      let  FinishStatus= result.filter(PendStatus =>PendStatus.OrderStatus==="منهي")
+
+      // ألغاء
+      let  CancellationStatus= result.filter(PendStatus =>PendStatus.OrderStatus==="منهي")
+      
+      res.status(200).json({
+        CancellationStatus: CancellationStatus,
+        FinishStatus:FinishStatus,
+        RejectionStatus:RejectionStatus,
+        pendingStatus:pendingStatus,
+        AcceptStatus:AcceptStatus,
+        massage: "this Order Result for Client Id ",
+      });
+    })
+    .catch((err) => {
+      res.status(404).json({
+        massage: "can not find result  worker id by filter  ! " + err,
+      });
+    });
+
+}
