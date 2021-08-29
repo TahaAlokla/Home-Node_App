@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const adminController = require('../controllers/admin.controller')
 const serviceController = require('../controllers/service.controller')
+const userController = require('../controllers/user.controller')
 const QuestionAndAnswerController = require('../controllers/QuestionAndAnswer.controller')
 const citesAvailableController = require('../controllers/citesAvailable.controller')
 const authAdmin = require('../guards/auth.admin')
@@ -52,5 +53,8 @@ router.delete('/deleteQ&A/:id',authAdmin.isAuthAdmin,QuestionAndAnswerController
 
 // * add citesAvailable
 router.post('/addCitesAvailable',authAdmin.isAuthAdmin,citesAvailableController.addCityAvailable)
+
+// * get all user 
+router.get('/getAllUser', authAdmin.isAuthAdmin, userController.getAllUser)
 
 module.exports = router;

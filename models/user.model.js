@@ -1,3 +1,4 @@
+const { boolean } = require('joi');
 const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema,
@@ -51,6 +52,10 @@ const userSchema = mongoose.Schema({
     workerGender:{
         type:String,
         enum: ['ذكر', 'أنثى'],
+    },
+    activeUser:{
+        type:Boolean,
+        default:true
     },
     // filed special worker array of request orders [include id order]
     orderRequest:{
