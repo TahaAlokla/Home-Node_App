@@ -55,6 +55,10 @@ router.delete('/deleteQ&A/:id',authAdmin.isAuthAdmin,QuestionAndAnswerController
 router.post('/addCitesAvailable',authAdmin.isAuthAdmin,citesAvailableController.addCityAvailable)
 
 // * get all user 
-router.get('/getAllUser', authAdmin.isAuthAdmin, userController.getAllUser)
+router.get('/getAllUser', authAdmin.isAuthAdmin, adminController.getAllUser)
+// blocked user 
+router.post('/blockedUserActivate', authAdmin.isAuthAdmin , adminController.blockedUserActivate)
+// unBlockedUserActivate
+router.post('/unBlockedUserActivate' , authAdmin.isAuthAdmin , adminController.unBlockedUserActivate)
 
 module.exports = router;

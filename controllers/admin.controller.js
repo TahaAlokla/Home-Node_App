@@ -1,4 +1,5 @@
 const AdminModel = require('../models/admin.model')
+const User = require("../models/user.model");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
@@ -115,3 +116,80 @@ exports.addAdmin=(req, res, next)=>{
  
 
 }
+
+// blocked user 
+exports.blockedUserActivate=(req, res , next )=>{
+    User.findOneAndUpdate(
+      { phoneNumber: req.body.phoneNumber },
+      { $set:{activeUser:false} },
+      { new: true }).then(result=>{
+        if(!result){
+          res.status(400).json({
+            massage:'error phone number can not found ! '+ req.body.phoneNumber,
+           
+          })
+          
+        }else{
+          res.status(200).json({
+            massage:'successfully blocked user ',
+            activeUserStatus:result.activeUser
+  
+          })
+        }
+  
+      }).catch(err=>{
+        res.status(400).json({
+          massage:'something Error catch err blocked user '
+        })
+      })
+  
+  }
+
+//   unblocked user
+exports.unBlockedUserActivate=(req, res , next )=>{
+    User.findOneAndUpdate(
+      { phoneNumber: req.body.phoneNumber },
+      { $set:{activeUser:true} },
+      { new: true }).then(result=>{
+        if(!result){
+          res.status(400).json({
+            massage:'error phone number can not found ! '+ req.body.phoneNumber,
+           
+          })
+          
+        }else{
+          res.status(200).json({
+            massage:'successfully Unblocked user ',
+            activeUserStatus:result.activeUser
+  
+          })
+        }
+  
+      }).catch(err=>{
+        res.status(400).json({
+          massage:'something Error catch err blocked user '
+        })
+      })
+  
+  }
+
+//   get All user 
+exports.getAllUser = ( req, res, next)=>{
+    User.find({}).select('id typeUser activeUser  username phoneNumber createdAt service').then(result=>{
+      let clientUser = result.filter(user=>user.typeUser==="client")
+      let WorkerUser = result.filter(user=>user.typeUser==="worker")
+      let blockedUser = result.filter(user=>user.activeUser===false)
+  
+      res.status(200).json({
+        clientUser:clientUser,
+        WorkerUser:WorkerUser,
+        blockedUser:blockedUser,
+        massage:' list of user storage DB'
+  
+      })
+    }).catch(err=>{
+      res.status(404).json({
+        massage:'something error of get all user catch err '
+      })
+    })
+  }

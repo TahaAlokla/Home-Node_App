@@ -357,23 +357,9 @@ exports.GetAllOrderStatus=(req, res,next)=>{
 }
 
 
-exports.getAllUser = ( req, res, next)=>{
-  User.find({}).select('id typeUser activeUser  username phoneNumber ').then(result=>{
-    let clientUser = result.filter(user=>user.typeUser==="client")
-    let WorkerUser = result.filter(user=>user.typeUser==="worker")
 
-    res.status(200).json({
-      clientUser:clientUser,
-      WorkerUser:WorkerUser,
-      massage:' list of user storage DB'
 
-    })
-  }).catch(err=>{
-    res.status(404).json({
-      massage:'something error of get all user catch err '
-    })
-  })
-}
+
 
 //  IO.emit("message"+doc.clientId, { type: "notification", objectOrder: doc });
 // {
