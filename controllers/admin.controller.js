@@ -1,9 +1,11 @@
 const AdminModel = require('../models/admin.model')
 const User = require("../models/user.model");
+const serviceModel = require('../models/service.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
 const { validationResult } = require('express-validator');
+const orderModel = require('../models/order.model');
 
 // ###############################  Admin Controller #####################
 
@@ -89,18 +91,18 @@ exports.addAdmin=(req, res, next)=>{
                     adminName: req.body.adminName,
                     phoneNumber: req.body.phoneNumber,
                     password: hashPassword,
-                    adminPrivilege: 'sub-admin',
+                    adminPrivilege: req.body.adminPrivilege,
                 })
                 Admin.save().then(result => {
                     res.status(200).json({
-                        massage: "save user successful ",
+                        massage: "save Admin successful ",
                         admin: result
                     })
 
                 }).catch(err => {
                     res.status(404).json({
-                        massage: "can not save user | catch err",
-                        massageErr: err
+                        massage: "can not save user | catch err" +err,
+                       
                     })
                 })
 
@@ -114,6 +116,35 @@ exports.addAdmin=(req, res, next)=>{
     })
   
  
+
+}
+
+// deleteAdmin 
+exports.deleteAdmin=(req, res, next)=>{
+  AdminModel.findOneAndDelete({ _id: req.params.id })
+    .then((result) => {
+      // this findOneAndDelete return document before delete
+      console.log("test delete Admin", result);
+      if (result) {
+        console.log(result);
+        res.status(200).json({
+          massage:
+            "تم حذف هذا الحساب بنجاح ",
+        });
+      } else {
+        // if user already deleted
+        // console.log(result); : allows print null
+        res.status(401).json({
+          massage: "هذا الحساب محذوف مسبقاً",
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({
+        massage: "هذا الحساب غير موجود بالفعل ,"+ err
+      
+      });
+    });
 
 }
 
@@ -193,3 +224,77 @@ exports.getAllUser = ( req, res, next)=>{
       })
     })
   }
+
+  exports.viewServices = (req, res, next) => {
+
+    serviceModel.find({}).select(' _id serviceName serviceDescription serviceImage').then(services => {
+        console.log(services)
+        if (services.length > 0) {
+            res.status(200).json({
+                services: services,
+                massage: "قائمة خدماتنا "
+            })
+        } else {
+            res.status(200).json({
+                services: services,
+                massage: "لا يوجد اي خدمة بعد "
+            })
+        }
+
+    }).catch(err => {
+        res.status(404).json({
+            massageErr: err,
+            massageFrom: " get All Services From DB | catch Err "
+        })
+
+    })
+
+}
+
+exports.getAllAdmins= (req, res ,next)=>{
+  AdminModel.find({}).select('_id  adminName phoneNumber adminPrivilege createdAt ').then(result=>{
+    if(!result){
+      res.status(400).json({
+        massage:' can not found any admins !! '
+      })
+    }else{
+      res.status(200).json({
+        admins: result,
+        massage:'array of admins '
+
+      })
+    }
+  }).catch(err=>{
+    res.status(400).json({
+      massage:'catch error when get all admins error massage'+ err,
+      
+    })
+  })
+
+}
+
+// get All Orders 
+// ,{path:"IdClient", select:"username"}
+exports.getAllOrders =(req, res , next)=>{
+  orderModel.find({}).select('IdClient IdWorker  serviceName timeOrder OrderStatus massageFromUser createdAt').populate({path:"IdWorker", select:"username"}).populate({path:"IdClient", select:"username"})
+  .then(result=>{
+    if(!result){
+      res.status(400).json({
+        massage:' something Error can not fetch any data of order model ! '
+      })
+    }else{
+      res.status(200).json({
+        orders: result,
+        massage:'lists of orders '
+
+      })
+    }
+
+
+  }).catch(err=>{
+    res.status(400).json({
+      massage:'catch error' + err
+    })
+  })
+
+}

@@ -42,6 +42,7 @@ const userSchema = mongoose.Schema({
     },
     service:{
         type:String,
+        ref:"Service",
     },
     workerAge:{
         type:String

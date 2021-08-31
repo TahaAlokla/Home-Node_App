@@ -277,6 +277,7 @@ exports.addOrderWorker = (req, res, next) => {
     IdClient: req.body.IdClient,
     IdWorker: req.body.IdWorker,
     serviceName: req.body.serviceName,
+    massageFromUser:req.body.massageFromUser,
     timeOrder: new Date(),
     OrderStatus: "معلق",
   });
@@ -305,7 +306,7 @@ exports.addOrderWorker = (req, res, next) => {
 exports.getOrderStatusPending = (req, res, next) => {
   Order
     .find({ IdClient: req.body.IdClient, OrderStatus: "معلق" })
-    .select("IdWorker")
+    .select("IdWorker massageFromUser")
     .then((result) => {
       res.status(200).json({
         IdWorkers: result,

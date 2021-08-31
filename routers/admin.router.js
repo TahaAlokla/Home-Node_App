@@ -39,6 +39,8 @@ router.patch('/updateService/:id', authAdmin.isAuthAdmin,
 
 // add admin
 router.post('/addAdmin', authAdmin.isAuthAdmin, addAdminValidation, adminController.addAdmin)
+// delete Admin
+router.delete('/delete/:id', authAdmin.isAuthAdmin , adminController.deleteAdmin)
 
 
 // add QuestionAndAnswer
@@ -60,5 +62,10 @@ router.get('/getAllUser', authAdmin.isAuthAdmin, adminController.getAllUser)
 router.post('/blockedUserActivate', authAdmin.isAuthAdmin , adminController.blockedUserActivate)
 // unBlockedUserActivate
 router.post('/unBlockedUserActivate' , authAdmin.isAuthAdmin , adminController.unBlockedUserActivate)
+
+router.get('/getAllAdmins', authAdmin.isAuthAdmin , adminController.getAllAdmins)
+
+//  get all orders 
+router.get('/getAllOrders' , authAdmin.isAuthAdmin , adminController.getAllOrders)
 
 module.exports = router;

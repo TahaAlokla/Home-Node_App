@@ -28,6 +28,9 @@ const orderSchema=  mongoose.Schema({
         type:String,
         enum: ['معلق', 'مقبول','مرفوض','ألغاء','منهي'],
         default:'معلق'
+    },
+    massageFromUser:{
+        type:String,
     }
 },{ timestamps: true })
 orderSchema.index({IdClient: 1, IdWorker: 1}, {unique: true});

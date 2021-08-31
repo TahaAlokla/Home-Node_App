@@ -20,7 +20,7 @@ const AdminSchema = mongoose.Schema({
         enum: ['full-admin', 'sub-admin'],
         default:"full-admin"
     }
-})
+},{ timestamps: true })
 
 AdminSchema.plugin(uniqueValidator);
 module.exports= mongoose.model('Admin', AdminSchema); 
