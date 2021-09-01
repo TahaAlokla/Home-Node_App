@@ -42,11 +42,11 @@ exports.addQuestionAndAnswer=(req, res, next)=>{
     QuestionAndAnswer.save().then(result => {
         res.status(200).json({
             massage: 'successfully save new   QuestionAndAnswer ',
-            QuestionAndAnswer: result
+            QuestionAndAnswerArray: result
         })
     }).catch(err => {
         res.status(404).json({
-            massage: "can not save Service ! ",
+            massage: "can not save Service ! "+err,
             massageFrom: "save   QuestionAndAnswer add Q and A Function ",
             massageErr: err
         })
